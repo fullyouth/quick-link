@@ -9,6 +9,7 @@ function IndexPopup() {
   const [addOrUpdate, setAddOrUpdate] = useState("add")
   const [showExport, setShowExport] = useState(false)
   const hoverTimeout = useRef<NodeJS.Timeout | null>(null)
+  const [showTooltip, setShowTooltip] = useState(false)
 
   // Show toast message
   const showToast = (message: string) => {
@@ -117,20 +118,47 @@ function IndexPopup() {
     }
   }
 
+  const handleTooltipMouseEnter = () => {
+    setShowTooltip(true)
+  }
+
+  const handleTooltipMouseLeave = () => {
+    setShowTooltip(false)
+  }
+
   return (
     <div className="popup-container">
       <p className="quickLink-title">
+        <div className="quickLink-logo"></div>
         QuickLink
       </p>
       {/* 头部表单 */}
       <div className="input-container">
         <div className="input-group">
-          <input
-            className="alias-input"
-            placeholder="别名"
-            value={aliasKey}
-            onChange={(e) => handleChange(e.target.value)}
-          />
+          <div style={{ display: "flex", alignItems: "center", position: "relative" }}>
+            <input
+              className="alias-input"
+              placeholder="别名"
+              value={aliasKey}
+              onChange={(e) => handleChange(e.target.value)}
+            />
+            <div
+              className="alias-input-tip"
+              onMouseEnter={handleTooltipMouseEnter}
+              onMouseLeave={handleTooltipMouseLeave}
+            >
+              ?
+            </div>
+          </div>
+          {showTooltip && (
+              <div className="tooltip">
+                <p>1【精确匹配模式】配置：{`别名task/fat 目标https://aaa.com/task`} </p>
+                <p>task/fat  {`->`}  https://aaa.com/task</p>
+                <p>2【动态参数模式】配置：{`别名task/prod 目标https://aaa.com/task/{taskid}`}</p>
+                <p>task/prod  {`->`}  https://aaa.com/task</p>
+                <p>task/prod?taskid=111  {`->`}  https://aaa.com/task/111</p>
+                </div>
+            )}
           <textarea
             className="alias-input alias-input-textarea"
             placeholder="目标地址"
@@ -161,18 +189,19 @@ function IndexPopup() {
           </div>
         </div>
       </div>
-      <ul className="alias-list">
-        {Object.entries(aliases)
-          .sort(([, a], [, b]) => b.sort - a.sort) // Sort by descending order of sort value
-          .map(([key, { value }]) => (
-            <li key={key} className="alias-item">
-              <p className="alias-item-p1">{key}</p>
-              <p className="alias-item-p2">{value}</p>
-              <button className="alias-item-btn" onClick={() => handleDelete(key)}>删除</button>
-            </li>
-          ))}
-      </ul>
-
+      {Object.entries(aliases).length > 0 && (
+        <ul className="alias-list">
+          {Object.entries(aliases)
+            .sort(([, a], [, b]) => b.sort - a.sort) // Sort by descending order of sort value
+            .map(([key, { value }]) => (
+              <li key={key} className="alias-item">
+                <p className="alias-item-p1">{key}</p>
+                <p className="alias-item-p2">{value}</p>
+                <button className="alias-item-btn" onClick={() => handleDelete(key)}>删除</button>
+              </li>
+            ))}
+        </ul>
+      )}
       {toastMessage && <div className="toast">{toastMessage}</div>}
     </div>
   )

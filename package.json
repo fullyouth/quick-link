@@ -1,7 +1,7 @@
 {
   "name": "quick-link",
   "displayName": "QuickLink",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "配置link别名，快速跳转到自己想去的web页面",
   "author": "haoqizhang",
   "scripts": {
@@ -31,14 +31,10 @@
     "permissions": [
       "storage",
       "activeTab",
-      "omnibox",
       "webNavigation"
     ],
     "background": {
       "service_worker": "background.ts"
-    },
-    "omnibox": {
-      "keyword": "mykey" 
     }
   }
 }
