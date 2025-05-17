@@ -1,8 +1,8 @@
 {
-  "name": "example-dir",
-  "displayName": "Example dir",
+  "name": "quick-link",
+  "displayName": "QuickLink",
   "version": "0.0.1",
-  "description": "浏览器中随心自如的跳转到自己想要的web页面",
+  "description": "配置link别名，快速跳转到自己想去的web页面",
   "author": "haoqizhang",
   "scripts": {
     "dev": "plasmo dev",
@@ -25,7 +25,20 @@
   },
   "manifest": {
     "host_permissions": [
-      "https://*/*"
-    ]
+      "https://*/*",
+      "http://*/*"
+    ],
+    "permissions": [
+      "storage",
+      "activeTab",
+      "omnibox",
+      "webNavigation"
+    ],
+    "background": {
+      "service_worker": "background.ts"
+    },
+    "omnibox": {
+      "keyword": "mykey" 
+    }
   }
 }
