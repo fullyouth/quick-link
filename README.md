@@ -5,8 +5,6 @@
 首先，运行开发服务器：
 
 ```bash
-pnpm dev
-# 或
 npm run dev
 ```
 
@@ -20,13 +18,10 @@ npm run dev
 运行以下命令：
 
 ```bash
-pnpm build
-# 或
 npm run build
 ```
 
 这将为您的扩展创建一个生产包，可以打包为 zip 文件并发布到商店。
 
-## 提交到网络商店
-
-部署 Plasmo 扩展的最简单方法是使用内置的 [bpp](https://bpp.browser.market) GitHub 操作。然而，在使用此操作之前，请确保构建您的扩展并将第一个版本上传到商店以建立基本凭据。然后，只需按照[此设置说明](https://docs.plasmo.com/framework/workflows/submit)操作，您就可以开始自动提交了！
+## 使用生产版本
+将build/chrome-mv3-prod 目录直接拖入到拓展程序中即可
